@@ -1,0 +1,157 @@
+.hero {
+  padding: 6rem 0;
+  background: var(--primary);
+  color: white;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  color: white;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+}
+
+.benefits {
+  padding: 5rem 0;
+  background: white;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.benefitCard {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  transition: transform 0.3s;
+}
+
+.benefitCard:hover {
+  transform: translateY(-5px);
+}
+
+.benefitCard i {
+  font-size: 3rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.benefitCard h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.benefitCard p {
+  color: var(--text-muted);
+}
+
+.pricing {
+  padding: 5rem 0;
+  background: var(--secondary);
+  text-align: center;
+}
+
+.pricingTable {
+  background: white;
+  border-radius: 1rem;
+  padding: 3rem;
+  max-width: 800px;
+  margin: 3rem auto 0;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.tierGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.tierCard {
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+}
+
+.tierCard.highlight {
+  border-color: var(--primary);
+  background: #fffbeb;
+}
+
+.tierPrice {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin: 1rem 0;
+}
+
+.requirements {
+  padding: 5rem 0;
+  background: white;
+}
+
+.reqList {
+  max-width: 600px;
+  margin: 2rem auto;
+  list-style: none;
+}
+
+.reqList li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: var(--secondary);
+  border-radius: 0.5rem;
+}
+
+.reqList i {
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
+.formContainer {
+  max-width: 600px;
+  margin: 3rem auto;
+  background: white;
+  padding: 3rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.formGroup input, .formGroup select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-family: var(--font-body);
+}
+
+@media (max-width: 768px) {
+  .benefitsGrid, .tierGrid {
+    grid-template-columns: 1fr;
+  }
+}
