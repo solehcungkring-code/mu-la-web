@@ -84,7 +84,7 @@ export default async function Home() {
             </div>
             <div className={styles.showcaseInfo}>
               <div className={styles.badges}>
-                <span className={styles.badge}><i className="las la-check-circle"></i> BPOM MD 867031001531</span>
+                <span className={styles.badge}><i className="las la-check-circle"></i> Terdaftar BPOM</span>
                 <span className={styles.badge}><i className="las la-certificate"></i> Halal MUI</span>
               </div>
               <h3>MU-LA Collagen Drink 5000 mg</h3>
@@ -175,38 +175,110 @@ export default async function Home() {
             <h2 className={styles.sectionTitle}>Bandingkan Sendiri</h2>
             <p className={styles.sectionSubtitle}>Apa yang perlu Anda perhatikan saat memilih minuman kolagen.</p>
             
-            <div style={{ overflowX: "auto" }}>
+            {/* Desktop Table View */}
+            <div className={styles.compareDesktopWrapper}>
               <table className={styles.compareTable}>
                 <thead>
                   <tr>
-                    <th>Faktor</th>
-                    <th>Yang Perlu Diperhatikan</th>
-                    <th>Komposisi MU-LA</th>
+                    <th style={{ width: "26%" }}>Faktor</th>
+                    <th style={{ width: "38%" }}>Yang Perlu Diperhatikan</th>
+                    <th style={{ width: "36%" }} className={styles.compareMulaTh}>Komposisi MU-LA</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Kandungan Kolagen</td>
-                    <td>Berapa mg per serving (banyak yang di bawah 1000mg)</td>
-                    <td><span className="text-accent" style={{ fontWeight: 600 }}>5.000 mg</span> per serving</td>
+                    <td className={styles.factorCell}>Kandungan Kolagen</td>
+                    <td className={styles.noticeCell}>Berapa mg per serving (banyak yang di bawah 1000mg)</td>
+                    <td className={styles.mulaCell}><span className={styles.mulaHighlight}>5.000 mg</span> per serving</td>
                   </tr>
                   <tr>
-                    <td>Gula (Sugar)</td>
-                    <td>Gula pasir / Dextrose yang memicu kalori tinggi</td>
-                    <td><span className="text-accent" style={{ fontWeight: 600 }}>Sugar Free</span> (Stevia)</td>
+                    <td className={styles.factorCell}>Gula (Sugar)</td>
+                    <td className={styles.noticeCell}>Gula pasir / Dextrose yang memicu kalori tinggi</td>
+                    <td className={styles.mulaCell}><span className={styles.mulaHighlight}>Sugar Free</span> (Stevia)</td>
                   </tr>
                   <tr>
-                    <td>Rasa & Aroma</td>
-                    <td>Apakah amis / terlalu manis / menggunakan perasa buatan tebal</td>
-                    <td>Rasa segar <span className="text-accent" style={{ fontWeight: 600 }}>Orange Honey</span> alami</td>
+                    <td className={styles.factorCell}>Rasa & Aroma</td>
+                    <td className={styles.noticeCell}>Apakah amis / terlalu manis / menggunakan perasa buatan tebal</td>
+                    <td className={styles.mulaCell}>Rasa segar <span className={styles.mulaHighlight}>Orange Honey</span> alami</td>
                   </tr>
                   <tr>
-                    <td>Berat Bersih</td>
-                    <td>Sachet terlalu kecil (misal 5g) biasanya kolagennya sedikit</td>
-                    <td><span className="text-accent" style={{ fontWeight: 600 }}>15 gram</span> per sachet</td>
+                    <td className={styles.factorCell}>Berat Bersih</td>
+                    <td className={styles.noticeCell}>Sachet terlalu kecil (misal 5g) biasanya kolagennya sedikit</td>
+                    <td className={styles.mulaCell}><span className={styles.mulaHighlight}>15 gram</span> per sachet</td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Cards View (100% Fit Width, Tanpa Bergeser Kanan Kiri) */}
+            <div className={styles.compareMobileList}>
+              <div className={styles.compareMobileCard}>
+                <div className={styles.compareMobileHeader}>
+                  <span className={styles.compareFactorTag}>Faktor</span>
+                  <h4 className={styles.compareFactorTitle}>Kandungan Kolagen</h4>
+                </div>
+                <div className={styles.compareMobileRow}>
+                  <div className={styles.compareNoticeBox}>
+                    <span className={styles.compareBoxLabel}>Yang Perlu Diperhatikan</span>
+                    <p className={styles.compareBoxText}>Berapa mg per serving (banyak yang di bawah 1000mg)</p>
+                  </div>
+                  <div className={styles.compareMulaBox}>
+                    <span className={styles.compareBoxLabelMula}>Komposisi MU-LA</span>
+                    <p className={styles.compareBoxTextMula}><span className={styles.mulaBadgePill}>5.000 mg</span> per serving</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.compareMobileCard}>
+                <div className={styles.compareMobileHeader}>
+                  <span className={styles.compareFactorTag}>Faktor</span>
+                  <h4 className={styles.compareFactorTitle}>Gula (Sugar)</h4>
+                </div>
+                <div className={styles.compareMobileRow}>
+                  <div className={styles.compareNoticeBox}>
+                    <span className={styles.compareBoxLabel}>Yang Perlu Diperhatikan</span>
+                    <p className={styles.compareBoxText}>Gula pasir / Dextrose yang memicu kalori tinggi</p>
+                  </div>
+                  <div className={styles.compareMulaBox}>
+                    <span className={styles.compareBoxLabelMula}>Komposisi MU-LA</span>
+                    <p className={styles.compareBoxTextMula}><span className={styles.mulaBadgePill}>Sugar Free</span> (Stevia)</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.compareMobileCard}>
+                <div className={styles.compareMobileHeader}>
+                  <span className={styles.compareFactorTag}>Faktor</span>
+                  <h4 className={styles.compareFactorTitle}>Rasa & Aroma</h4>
+                </div>
+                <div className={styles.compareMobileRow}>
+                  <div className={styles.compareNoticeBox}>
+                    <span className={styles.compareBoxLabel}>Yang Perlu Diperhatikan</span>
+                    <p className={styles.compareBoxText}>Apakah amis / terlalu manis / perasa buatan tebal</p>
+                  </div>
+                  <div className={styles.compareMulaBox}>
+                    <span className={styles.compareBoxLabelMula}>Komposisi MU-LA</span>
+                    <p className={styles.compareBoxTextMula}>Rasa segar <span className={styles.mulaBadgePill}>Orange Honey</span> alami</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.compareMobileCard}>
+                <div className={styles.compareMobileHeader}>
+                  <span className={styles.compareFactorTag}>Faktor</span>
+                  <h4 className={styles.compareFactorTitle}>Berat Bersih</h4>
+                </div>
+                <div className={styles.compareMobileRow}>
+                  <div className={styles.compareNoticeBox}>
+                    <span className={styles.compareBoxLabel}>Yang Perlu Diperhatikan</span>
+                    <p className={styles.compareBoxText}>Sachet terlalu kecil (misal 5g) kolagennya sedikit</p>
+                  </div>
+                  <div className={styles.compareMulaBox}>
+                    <span className={styles.compareBoxLabelMula}>Komposisi MU-LA</span>
+                    <p className={styles.compareBoxTextMula}><span className={styles.mulaBadgePill}>15 gram</span> per sachet</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
