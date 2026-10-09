@@ -42,11 +42,12 @@ export default function Header({ content }: { content?: Record<string, any> }) {
           <Link href="/#faq">FAQ</Link>
         </nav>
         <div className={styles.navActions}>
-          <Link href="/reseller" className="btn btn-outline">
+          <Link href="/reseller" className={styles.navBtnOutline}>
             Jadi Reseller
           </Link>
-          <Link href="/#beli" className="btn btn-primary">
-            Beli Sekarang
+          <Link href="/#beli" className={styles.navBtnPrimary}>
+            <span>Beli Sekarang</span>
+            <i className="las la-shopping-bag"></i>
           </Link>
         </div>
       </div>

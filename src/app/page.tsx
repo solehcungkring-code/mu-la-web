@@ -27,11 +27,13 @@ export default async function Home() {
               <h1 dangerouslySetInnerHTML={{ __html: content?.["hero_title"]?.textValue || 'Daily Collagen, Dibuat untuk Dinikmati <span class="highlight">Setiap Hari.</span>' }} />
               <p>{content?.["hero_subtitle"]?.textValue || "MU-LA Collagen 5000 mg dengan rasa Orange Honey yang menyegarkan dan bebas gula."}</p>
               <div className={styles.heroActions}>
-                <Link href="#beli" className="btn btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.125rem" }}>
-                  Beli MU-LA
+                <Link href="#beli" className={styles.heroBtnPrimary}>
+                  <span>Beli MU-LA</span>
+                  <i className="las la-arrow-right"></i>
                 </Link>
-                <Link href="#produk" className="btn btn-outline" style={{ padding: "1rem 2rem", fontSize: "1.125rem", border: "none" }}>
-                  Kenali MU-LA <i className="las la-arrow-down"></i>
+                <Link href="#produk" className={styles.heroBtnSecondary}>
+                  <span>Kenali MU-LA</span>
+                  <i className="las la-arrow-down"></i>
                 </Link>
               </div>
             </div>

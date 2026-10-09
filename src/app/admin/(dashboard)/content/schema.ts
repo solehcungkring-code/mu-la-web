@@ -146,12 +146,9 @@ export const CONTENT_SCHEMA = [
         title: "Sosial Media (Icon Footer)",
         fields: [
           { key: "whatsapp", label: "Link WhatsApp", type: "text", default: "https://wa.me/628110000000" },
-          { key: "email", label: "Email Resmi", type: "text", default: "hello@mu-la.id" },
           { key: "instagram", label: "Link Instagram", type: "text", default: "https://instagram.com/mula.collagen" },
           { key: "facebook", label: "Link Facebook", type: "text", default: "https://facebook.com/mula.collagen" },
           { key: "tiktok", label: "Link TikTok", type: "text", default: "https://tiktok.com/@mula.collagen" },
-          { key: "youtube", label: "Link YouTube", type: "text", default: "https://youtube.com/@mula.collagen" },
-          { key: "linkedin", label: "Link LinkedIn", type: "text", default: "https://linkedin.com/company/mula-indonesia" },
         ]
       },
       {

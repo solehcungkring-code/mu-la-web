@@ -9,8 +9,9 @@ export default function ResellerLanding() {
         <div className="container">
           <h1>Tumbuh Bersama MU-LA</h1>
           <p>Bergabunglah menjadi Mitra Reseller resmi MU-LA Collagen Drink. Dapatkan harga khusus, materi promosi, dan dukung lebih banyak wanita Indonesia merawat diri.</p>
-          <Link href="/reseller/daftar" className="btn" style={{ background: "white", color: "var(--primary)", fontSize: "1.125rem", padding: "1rem 2rem" }}>
-            Daftar Sekarang
+          <Link href="/reseller/daftar" className={styles.heroBtn}>
+            <span>Daftar Sekarang</span>
+            <i className="las la-arrow-right"></i>
           </Link>
         </div>
       </section>

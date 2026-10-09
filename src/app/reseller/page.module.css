@@ -17,6 +17,27 @@
   margin: 0 auto 2.5rem;
 }
 
+.heroBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: white;
+  color: var(--primary);
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.875rem 2rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: all 0.2s ease;
+}
+
+.heroBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
 .benefits {
   padding: 5rem 0;
   background: white;
@@ -151,6 +172,11 @@
 }
 
 @media (max-width: 768px) {
+  .heroBtn {
+    height: 44px;
+    padding: 0 1.5rem;
+    font-size: 0.875rem;
+  }
   .benefitsGrid, .tierGrid {
     grid-template-columns: 1fr;
   }
