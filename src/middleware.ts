@@ -5,16 +5,12 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const session = request.cookies.get('admin_session')?.value;
 
-  // Add x-pathname header for server components to know the active path
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-pathname', pathname);
+  const cleanPath = pathname.replace(/\/+$/, '') || '/';
 
-  if (pathname.startsWith('/admin')) {
+  if (cleanPath.startsWith('/admin')) {
     // Allow /admin/login and /admin/logout without session requirement
-    if (pathname === '/admin/login' || pathname === '/admin/logout') {
-      return NextResponse.next({
-        request: { headers: requestHeaders }
-      });
+    if (cleanPath === '/admin/login' || cleanPath === '/admin/logout') {
+      return NextResponse.next();
     }
 
     // Any other /admin page requires session cookie
@@ -24,9 +20,7 @@ export function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next({
-    request: { headers: requestHeaders }
-  });
+  return NextResponse.next();
 }
 
 export const config = {

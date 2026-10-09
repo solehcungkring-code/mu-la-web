@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getArticles, getArticleById, saveArticle, deleteArticle } from "../../actions";
+import { getArticles, getArticleById, saveArticle, deleteArticle } from "@/app/actions";
 
 export default async function AdminArtikel(props: { searchParams: Promise<{ edit?: string }> }) {
   const searchParams = await props.searchParams;

@@ -1,21 +1,12 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { getAdminSession } from "@/lib/auth";
-import { logoutAdminAction } from "./actions";
+import { logoutAdminAction } from "../actions";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  const headerList = await headers();
-  const pathname = headerList.get("x-pathname") || "";
-
-  // If on login page, render children directly without sidebar
-  if (pathname === "/admin/login") {
-    return <>{children}</>;
-  }
-
   const session = await getAdminSession();
   if (!session) {
-    redirect("/admin/logout");
+    redirect("/admin/login");
   }
 
   return (

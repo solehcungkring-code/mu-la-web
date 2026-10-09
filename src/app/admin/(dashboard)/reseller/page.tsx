@@ -1,4 +1,4 @@
-import { getResellerLeads, updateResellerStatus } from "../../actions";
+import { getResellerLeads, updateResellerStatus } from "@/app/actions";
 import { revalidatePath } from "next/cache";
 
 export default async function AdminReseller() {

@@ -1,4 +1,4 @@
-import { getPageContent, updateContent } from "../../actions";
+import { getPageContent, updateContent } from "@/app/actions";
 import { CONTENT_SCHEMA } from "./schema";
 
 export default async function AdminContent() {

@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  outputFileTracingIncludes: {
+    '/admin/**': ['./dev.db'],
+    '/api/**': ['./dev.db'],
+    '/**': ['./dev.db'],
+  },
 };
 
 export default nextConfig;
