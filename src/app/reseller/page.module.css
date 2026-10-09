@@ -145,12 +145,13 @@
 }
 
 .formContainer {
-  max-width: 600px;
+  max-width: 620px;
   margin: 3rem auto;
   background: white;
   padding: 3rem;
-  border-radius: 1rem;
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--border);
 }
 
 .formGroup {
@@ -161,14 +162,190 @@
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
 }
 
 .formGroup input, .formGroup select {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.85rem 1rem;
   border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  font-family: var(--font-body);
+  border-radius: 0.75rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background: #fdfdfd;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formGroup input:focus, .formGroup select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(45, 80, 22, 0.12);
+  background: white;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submitBtn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.errorAlert {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 0.85rem 1.25rem;
+  border-radius: 0.75rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Success & WhatsApp Redirect State */
+.successBox {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.successIconWrapper {
+  width: 72px;
+  height: 72px;
+  background: #dcfce7;
+  color: #16a34a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 2.5rem;
+  box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.12);
+  animation: pulseIcon 2s infinite;
+}
+
+@keyframes pulseIcon {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.successTitle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.75rem;
+}
+
+.successDesc {
+  color: var(--text-muted);
+  font-size: 0.975rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.redirectNotice {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.summaryBox {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  text-align: left;
+  margin-bottom: 1.75rem;
+  font-size: 0.9rem;
+}
+
+.summaryTitle {
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  color: #475569;
+}
+
+.summaryItem:last-child {
+  margin-bottom: 0;
+}
+
+.summaryItem strong {
+  color: #1e293b;
+}
+
+.waRedirectBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: #25D366;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  width: 100%;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+  transition: all 0.2s ease;
+}
+
+.waRedirectBtn:hover {
+  background: #20bd5a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+}
+
+.waRedirectBtn i {
+  font-size: 1.5rem;
+}
+
+.manualNote {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.resetBtn {
+  margin-top: 1.25rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -179,5 +356,14 @@
   }
   .benefitsGrid, .tierGrid {
     grid-template-columns: 1fr;
+  }
+  .formContainer {
+    padding: 1.75rem 1.25rem;
+    margin: 1.5rem 1rem;
+    border-radius: 1rem;
+  }
+  .summaryItem {
+    flex-direction: column;
+    gap: 0.15rem;
   }
 }

@@ -323,6 +323,32 @@
 .cardFeatures li { margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); }
 .cardFeatures i { color: var(--primary); }
 
+.buyBtn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.buyBtn i {
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.buyBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
 /* Footer */
 .footer { background: #171717; color: white; padding: 4rem 0 2rem; }
 .footerGrid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }

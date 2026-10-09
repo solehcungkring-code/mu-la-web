@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
-import { getPageContent } from "./actions";
+import { getPageContent, getAdminWhatsAppNumber } from "./actions";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,9 +13,43 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const content = await getPageContent("home");
+  const [content, cleanWaNumber] = await Promise.all([
+    getPageContent("home"),
+    getAdminWhatsAppNumber(),
+  ]);
   
   const runningText = content?.["hero_running_text"]?.textValue || "Experience Premium Beauty, and Wellness Solutions with MU.LA";
+
+  // Pre-filled WhatsApp purchase messages for each package
+  const waStarterMsg = `Halo Admin MU-LA, saya ingin memesan paket MU-LA Collagen Drink dari website:
+
+📦 *Paket:* Starter (1 Box - 7 Sachet)
+💰 *Harga:* Rp 99.000
+✨ *Keterangan:* Coba rutin 1 minggu (5.000 mg Kolagen/hari)
+
+Mohon informasi ketersediaan stok, ongkir ke alamat saya, serta rekening pembayarannya. Terima kasih!`;
+
+  const waRoutineMsg = `Halo Admin MU-LA, saya ingin memesan paket MU-LA Collagen Drink dari website:
+
+📦 *Paket:* Routine (3 Box - 21 Sachet) [Best Seller]
+💰 *Harga:* Rp 279.000 (Lebih Hemat Rp 18.000)
+🎁 *Promo:* Free Ongkir (Pulau Jawa)
+✨ *Keterangan:* Program perawatan rutin 21 hari
+
+Mohon informasi ketersediaan stok dan rekening pembayaran untuk order saya. Terima kasih!`;
+
+  const waValueMsg = `Halo Admin MU-LA, saya ingin memesan paket MU-LA Collagen Drink dari website:
+
+📦 *Paket:* Value Pack (6 Box - 42 Sachet)
+💰 *Harga:* Rp 529.000 (Lebih Hemat Rp 65.000)
+🎁 *Promo:* Free Ongkir Seluruh Indonesia
+✨ *Keterangan:* Hasil maksimal perawatan (1 Bulan+)
+
+Mohon informasi ketersediaan stok dan rekening pembayaran untuk order saya. Terima kasih!`;
+
+  const waStarterUrl = `https://wa.me/${cleanWaNumber}?text=${encodeURIComponent(waStarterMsg)}`;
+  const waRoutineUrl = `https://wa.me/${cleanWaNumber}?text=${encodeURIComponent(waRoutineMsg)}`;
+  const waValueUrl = `https://wa.me/${cleanWaNumber}?text=${encodeURIComponent(waValueMsg)}`;
   
   return (
     <>
@@ -100,8 +134,9 @@ export default async function Home() {
                 <li><span>Aturan Pakai</span> <span>1-2 Sachet per hari</span></li>
               </ul>
               
-              <Link href="#beli" className="btn btn-primary" style={{ width: "100%" }}>
-                Beli Sekarang
+              <Link href="#beli" className="btn btn-primary" style={{ width: "100%", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
+                <span>Beli Sekarang — Pilih Paket</span>
+                <i className="las la-arrow-down"></i>
               </Link>
             </div>
           </div>
@@ -374,7 +409,15 @@ export default async function Home() {
                   <li><i className="las la-check"></i> 5.000 mg Kolagen / hari</li>
                   <li><i className="las la-times" style={{color: "#ccc"}}></i> Belum Termasuk Ongkir</li>
                 </ul>
-                <button className="btn btn-outline">Beli Starter</button>
+                <a 
+                  href={waStarterUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`btn btn-outline ${styles.buyBtn}`}
+                >
+                  <i className="lab la-whatsapp"></i>
+                  <span>Beli Starter</span>
+                </a>
               </div>
 
               {/* Card 2 - Highlighted */}
@@ -388,7 +431,15 @@ export default async function Home() {
                   <li><i className="las la-check"></i> Lebih Hemat Rp 18.000</li>
                   <li><i className="las la-check"></i> Free Ongkir (P. Jawa)</li>
                 </ul>
-                <button className="btn btn-primary">Beli Routine (Best Deal)</button>
+                <a 
+                  href={waRoutineUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`btn btn-primary ${styles.buyBtn}`}
+                >
+                  <i className="lab la-whatsapp"></i>
+                  <span>Beli Routine (Best Deal)</span>
+                </a>
               </div>
 
               {/* Card 3 */}
@@ -401,7 +452,15 @@ export default async function Home() {
                   <li><i className="las la-check"></i> Hemat Rp 65.000</li>
                   <li><i className="las la-check"></i> Free Ongkir Seluruh ID</li>
                 </ul>
-                <button className="btn btn-outline">Beli Value Pack</button>
+                <a 
+                  href={waValueUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`btn btn-outline ${styles.buyBtn}`}
+                >
+                  <i className="lab la-whatsapp"></i>
+                  <span>Beli Value Pack</span>
+                </a>
               </div>
             </div>
           </div>

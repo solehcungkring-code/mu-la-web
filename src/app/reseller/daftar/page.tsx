@@ -1,67 +1,224 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "../page.module.css";
-
 import { submitResellerLead } from "../../actions";
 
 export default function ResellerRegistration() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
+  const [summaryData, setSummaryData] = useState<{
+    name: string;
+    whatsapp: string;
+    domisili: string;
+    paket: string;
+    experience: string;
+  } | null>(null);
+
+  // Auto redirect to WhatsApp after submission
+  useEffect(() => {
+    if (isSuccess && redirectUrl) {
+      const timer = setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess, redirectUrl]);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    const formData = new FormData(e.currentTarget);
+    const result = await submitResellerLead(formData);
+
+    if (result.success && result.whatsappUrl) {
+      setSummaryData(result.data || null);
+      setRedirectUrl(result.whatsappUrl);
+      setIsSuccess(true);
+    } else {
+      setErrorMessage(result.error || "Gagal mengirim data. Silakan periksa kembali formulir Anda.");
+    }
+    setIsSubmitting(false);
+  }
+
   return (
-    <main style={{ background: "#f8fafc", minHeight: "80vh", padding: "4rem 0" }}>
+    <main style={{ background: "#f8fafc", minHeight: "85vh", padding: "3rem 0" }}>
       <div className={styles.formContainer}>
-        <h1 style={{ textAlign: "center", marginBottom: "1rem" }}>Pendaftaran Reseller</h1>
-        <p style={{ textAlign: "center", color: "var(--text-muted)", marginBottom: "2rem" }}>
-          Lengkapi form di bawah ini. Tim kami akan menghubungi Anda via WhatsApp untuk proses verifikasi.
-        </p>
+        {isSuccess && redirectUrl ? (
+          <div className={styles.successBox}>
+            <div className={styles.successIconWrapper}>
+              <i className="las la-check"></i>
+            </div>
+            
+            <h1 className={styles.successTitle}>Pendaftaran Berhasil Dicatat!</h1>
+            <p className={styles.successDesc}>
+              Terima kasih <strong>{summaryData?.name}</strong>. Formulir kemitraan Anda telah tersimpan di sistem kami. Anda akan otomatis dialihkan ke WhatsApp Admin MU-LA.
+            </p>
 
-        <form action={async (formData) => {
-          "use server";
-          await submitResellerLead(formData);
-          // In a real app, we would redirect or show success message here.
-        }}>
-          <div className={styles.formGroup}>
-            <label htmlFor="name">Nama Lengkap</label>
-            <input type="text" id="name" name="name" placeholder="Contoh: Sarah Angelina" required />
-          </div>
-          
-          <div className={styles.formGroup}>
-            <label htmlFor="whatsapp">Nomor WhatsApp</label>
-            <input type="tel" id="whatsapp" name="whatsapp" placeholder="Contoh: 081234567890" required />
-          </div>
+            <div className={styles.redirectNotice}>
+              <i className="las la-spinner la-spin" style={{ fontSize: "1.2rem" }}></i>
+              <span>Sedang menghubungkan ke WhatsApp Admin...</span>
+            </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="domisili">Kota Domisili</label>
-            <input type="text" id="domisili" name="domisili" placeholder="Contoh: Bandung" required />
-          </div>
+            {summaryData && (
+              <div className={styles.summaryBox}>
+                <div className={styles.summaryTitle}>
+                  <i className="las la-clipboard-list" style={{ marginRight: "0.4rem" }}></i>
+                  Ringkasan Formulir Terkirim:
+                </div>
+                <div className={styles.summaryItem}>
+                  <span>Nama Lengkap:</span>
+                  <strong>{summaryData.name}</strong>
+                </div>
+                <div className={styles.summaryItem}>
+                  <span>Nomor WhatsApp:</span>
+                  <strong>{summaryData.whatsapp}</strong>
+                </div>
+                <div className={styles.summaryItem}>
+                  <span>Kota Domisili:</span>
+                  <strong>{summaryData.domisili}</strong>
+                </div>
+                <div className={styles.summaryItem}>
+                  <span>Pilihan Paket:</span>
+                  <strong>{summaryData.paket}</strong>
+                </div>
+                <div className={styles.summaryItem}>
+                  <span>Pengalaman Berjualan:</span>
+                  <strong>{summaryData.experience}</strong>
+                </div>
+              </div>
+            )}
 
-          <div className={styles.formGroup}>
-            <label htmlFor="paket">Pilihan Paket Awal</label>
-            <select id="paket" name="paket" required>
-              <option value="">-- Pilih Paket --</option>
-              <option value="silver">Silver (10 Box)</option>
-              <option value="gold">Gold (50 Box)</option>
-              <option value="platinum">Platinum (100 Box)</option>
-            </select>
-          </div>
+            <a 
+              href={redirectUrl} 
+              className={styles.waRedirectBtn}
+            >
+              <i className="lab la-whatsapp"></i>
+              <span>Buka WhatsApp Sekarang</span>
+            </a>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="experience">Pengalaman Berjualan</label>
-            <select id="experience" name="experience" required>
-              <option value="">-- Pilih Pengalaman --</option>
-              <option value="pemula">Baru Mulai (Pemula)</option>
-              <option value="menengah">Sudah pernah jualan online</option>
-              <option value="ahli">Punya toko online / offline aktif</option>
-            </select>
-          </div>
+            <p className={styles.manualNote}>
+              *Jika aplikasi WhatsApp tidak otomatis terbuka, silakan klik tombol hijau di atas untuk mengirimkan data ke Admin.
+            </p>
 
-          <button type="submit" className="btn btn-primary" style={{ width: "100%", padding: "1rem", marginTop: "1rem" }}>
-            Kirim Pendaftaran
-          </button>
-        </form>
-        
-        <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
-          <Link href="/reseller" style={{ color: "var(--text-muted)", fontSize: "0.875rem", textDecoration: "underline" }}>
-            Kembali ke Informasi Reseller
-          </Link>
-        </div>
+            <div>
+              <button 
+                type="button" 
+                onClick={() => {
+                  setIsSuccess(false);
+                  setRedirectUrl(null);
+                  setSummaryData(null);
+                }}
+                className={styles.resetBtn}
+              >
+                Kirim Formulir Lain
+              </button>
+            </div>
+          </div>
+        ) : (
+          <>
+            <h1 style={{ textAlign: "center", marginBottom: "0.75rem", fontSize: "1.875rem", color: "var(--text-main)" }}>
+              Pendaftaran Reseller & Mitra
+            </h1>
+            <p style={{ textAlign: "center", color: "var(--text-muted)", marginBottom: "2rem", fontSize: "0.95rem", lineHeight: "1.5" }}>
+              Lengkapi formulir di bawah ini. Setelah dikirim, Anda akan langsung dialihkan ke WhatsApp Admin bersama rincian pendaftaran Anda.
+            </p>
+
+            {errorMessage && (
+              <div className={styles.errorAlert}>
+                <i className="las la-exclamation-circle" style={{ fontSize: "1.25rem" }}></i>
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+              <div className={styles.formGroup}>
+                <label htmlFor="name">Nama Lengkap *</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  placeholder="Contoh: Sarah Angelina" 
+                  required 
+                  disabled={isSubmitting}
+                />
+              </div>
+              
+              <div className={styles.formGroup}>
+                <label htmlFor="whatsapp">Nomor WhatsApp Aktif *</label>
+                <input 
+                  type="tel" 
+                  id="whatsapp" 
+                  name="whatsapp" 
+                  placeholder="Contoh: 081234567890" 
+                  required 
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="domisili">Kota Domisili *</label>
+                <input 
+                  type="text" 
+                  id="domisili" 
+                  name="domisili" 
+                  placeholder="Contoh: Bandung" 
+                  required 
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="paket">Pilihan Paket Awal *</label>
+                <select id="paket" name="paket" required disabled={isSubmitting} defaultValue="">
+                  <option value="" disabled>-- Pilih Paket Kemitraan --</option>
+                  <option value="silver">Silver — 10 Box (Rp 75.000/Box)</option>
+                  <option value="gold">Gold — 50 Box (Rp 65.000/Box)</option>
+                  <option value="platinum">Platinum — 100 Box (Rp 55.000/Box)</option>
+                </select>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="experience">Pengalaman Berjualan *</label>
+                <select id="experience" name="experience" required disabled={isSubmitting} defaultValue="">
+                  <option value="" disabled>-- Pilih Pengalaman Berjualan --</option>
+                  <option value="pemula">Baru Mulai (Pemula)</option>
+                  <option value="menengah">Sudah pernah jualan online</option>
+                  <option value="ahli">Punya toko online / offline aktif</option>
+                </select>
+              </div>
+
+              <button 
+                type="submit" 
+                className={`btn btn-primary ${styles.submitBtn}`} 
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <i className="las la-spinner la-spin"></i>
+                    <span>Memproses & Menyimpan...</span>
+                  </>
+                ) : (
+                  <>
+                    <i className="lab la-whatsapp" style={{ fontSize: "1.3rem" }}></i>
+                    <span>Kirim & Hubungkan ke WhatsApp</span>
+                  </>
+                )}
+              </button>
+            </form>
+            
+            <div style={{ textAlign: "center", marginTop: "1.75rem" }}>
+              <Link href="/reseller" style={{ color: "var(--text-muted)", fontSize: "0.875rem", textDecoration: "underline" }}>
+                ← Kembali ke Informasi Reseller
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </main>
   );
