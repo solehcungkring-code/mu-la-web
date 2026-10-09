@@ -34,35 +34,73 @@ export async function updateContent(page: string, section: string, key: string, 
 
 // HELPER TO GET ADMIN WHATSAPP NUMBER
 export async function getAdminWhatsAppNumber() {
-  const globalContent = await getPageContent("global");
-  const contactContent = await getPageContent("kontak");
-  const rawWa = globalContent?.["mobile_nav_whatsapp_number"]?.textValue || contactContent?.["info_phone"]?.textValue || "628110000000";
-  let cleanWa = rawWa.replace(/\D/g, "");
-  if (cleanWa.startsWith("0")) {
-    cleanWa = "62" + cleanWa.slice(1);
+  try {
+    const globalContent = await getPageContent("global");
+    const contactContent = await getPageContent("kontak");
+    const rawWa = globalContent?.["mobile_nav_whatsapp_number"]?.textValue;
+    if (rawWa && !rawWa.includes("811")) {
+      let clean = rawWa.replace(/\D/g, "");
+      if (clean.startsWith("0")) clean = "62" + clean.slice(1);
+      if (clean) return clean;
+    }
+    const phone = contactContent?.["info_phone"]?.textValue;
+    if (phone && !phone.includes("811")) {
+      let clean = phone.replace(/\D/g, "");
+      if (clean.startsWith("0")) clean = "62" + clean.slice(1);
+      if (clean) return clean;
+    }
+    return "6289637514407";
+  } catch {
+    return "6289637514407";
   }
-  return cleanWa || "628110000000";
 }
 
-// SAVE RESELLER LEAD & RETURN WHATSAPP REDIRECT URL
-export async function submitResellerLead(formData: FormData) {
-  try {
-    const name = (formData.get("name") as string || "").trim();
-    const whatsapp = (formData.get("whatsapp") as string || "").trim();
-    const domisili = (formData.get("domisili") as string || "").trim();
-    const paket = (formData.get("paket") as string || "").trim();
-    const experience = (formData.get("experience") as string || "").trim();
+export type ResellerLeadInput = {
+  name?: string;
+  whatsapp?: string;
+  domisili?: string;
+  paket?: string;
+  experience?: string;
+};
 
-    if (!name || !whatsapp || !domisili || !paket || !experience) {
-      return { success: false, error: "Mohon lengkapi seluruh kolom pendaftaran." };
+// SAVE RESELLER LEAD & RETURN WHATSAPP REDIRECT URL
+export async function submitResellerLead(input: FormData | ResellerLeadInput) {
+  try {
+    let name = "";
+    let whatsapp = "";
+    let domisili = "";
+    let paket = "";
+    let experience = "";
+
+    if (input instanceof FormData) {
+      name = (input.get("name") as string || "").trim();
+      whatsapp = (input.get("whatsapp") as string || "").trim();
+      domisili = (input.get("domisili") as string || "").trim();
+      paket = (input.get("paket") as string || "").trim();
+      experience = (input.get("experience") as string || "").trim();
+    } else if (input && typeof input === "object") {
+      name = (input.name || "").trim();
+      whatsapp = (input.whatsapp || "").trim();
+      domisili = (input.domisili || "").trim();
+      paket = (input.paket || "").trim();
+      experience = (input.experience || "").trim();
     }
 
-    await prisma.resellerLead.create({
-      data: { name, whatsapp, domisili, paket, experience }
-    });
-    
-    revalidatePath("/admin/reseller");
-    revalidatePath("/admin");
+    if (!name || !whatsapp || !domisili || !paket || !experience) {
+      return { success: false, error: "Mohon lengkapi seluruh kolom formulir pendaftaran." };
+    }
+
+    // Try saving to database safely (if database is writable)
+    try {
+      await prisma.resellerLead.create({
+        data: { name, whatsapp, domisili, paket, experience }
+      });
+      revalidatePath("/admin/reseller");
+      revalidatePath("/admin");
+    } catch (dbError) {
+      // If filesystem is read-only (like Vercel serverless with SQLite), do not block user!
+      console.warn("Notice: Database save skipped or filesystem is read-only:", dbError);
+    }
 
     const cleanAdminWa = await getAdminWhatsAppNumber();
 
@@ -106,8 +144,10 @@ Mohon verifikasi pendaftaran saya dan info langkah selanjutnya untuk bergabung. 
       }
     };
   } catch (error: any) {
-    console.error("Error submitting reseller lead:", error);
-    return { success: false, error: "Terjadi kendala saat menyimpan pendaftaran. Silakan coba lagi." };
+    console.error("Error in submitResellerLead:", error);
+    const cleanAdminWa = "6289637514407";
+    const fallbackUrl = `https://wa.me/${cleanAdminWa}?text=${encodeURIComponent("Halo Admin MU-LA, saya ingin mendaftar sebagai reseller MU-LA Collagen.")}`;
+    return { success: true, whatsappUrl: fallbackUrl };
   }
 }
 

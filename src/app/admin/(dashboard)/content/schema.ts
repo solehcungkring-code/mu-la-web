@@ -112,10 +112,10 @@ export const CONTENT_SCHEMA = [
         id: "info",
         title: "Informasi Detail",
         fields: [
-          { key: "address", label: "Alamat Kantor", type: "textarea", default: "Gedung Perkantoran Sudirman, Lt. 8\\nJl. Jend. Sudirman No.Kav 10-11, Jakarta Pusat\\nDKI Jakarta 10220" },
+          { key: "address", label: "Alamat Kantor", type: "textarea", default: "Gedung Perkantoran Sudirman, Lt. 8\nJl. Jend. Sudirman No.Kav 10-11, Jakarta Pusat\nDKI Jakarta 10220" },
           { key: "email", label: "Email Resmi", type: "text", default: "hello@mu-la.id" },
-          { key: "phone", label: "Nomor WhatsApp", type: "text", default: "+62 811-0000-0000" },
-          { key: "hours", label: "Jam Operasional", type: "textarea", default: "Senin - Jumat: 09.00 - 17.00 WIB\\nSabtu: 09.00 - 13.00 WIB\\nMinggu & Hari Libur Nasional: Tutup" },
+          { key: "phone", label: "Nomor WhatsApp", type: "text", default: "+62 896-3751-4407" },
+          { key: "hours", label: "Jam Operasional", type: "textarea", default: "Senin - Jumat: 09.00 - 17.00 WIB\nSabtu: 09.00 - 13.00 WIB\nMinggu & Hari Libur Nasional: Tutup" },
           { key: "maps_url", label: "URL Embed Google Maps", type: "textarea", default: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126920.24072847065!2d106.74100695026919!3d-6.229746535564024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x100c5e82dd4b820!2sJakarta%2C%20Daerah%20Khusus%20Ibukota%20Jakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" },
         ]
       }
@@ -145,7 +145,7 @@ export const CONTENT_SCHEMA = [
         id: "social",
         title: "Sosial Media (Icon Footer)",
         fields: [
-          { key: "whatsapp", label: "Link WhatsApp", type: "text", default: "https://wa.me/628110000000" },
+          { key: "whatsapp", label: "Link WhatsApp", type: "text", default: "https://wa.me/6289637514407" },
           { key: "instagram", label: "Link Instagram", type: "text", default: "https://instagram.com/mula.collagen" },
           { key: "facebook", label: "Link Facebook", type: "text", default: "https://facebook.com/mula.collagen" },
           { key: "tiktok", label: "Link TikTok", type: "text", default: "https://tiktok.com/@mula.collagen" },
@@ -155,7 +155,7 @@ export const CONTENT_SCHEMA = [
         id: "mobile_nav",
         title: "Navigasi Bawah Mobile (App-Like Bottom Bar)",
         fields: [
-          { key: "whatsapp_number", label: "Nomor WhatsApp Admin (contoh: 6281234567890)", type: "text", default: "628110000000" },
+          { key: "whatsapp_number", label: "Nomor WhatsApp Admin (contoh: 6289637514407)", type: "text", default: "6289637514407" },
           { key: "whatsapp_message", label: "Template Pesan WhatsApp Pengunjung (Umum / Beranda)", type: "textarea", default: "Halo Admin MU-LA, saya pengunjung dari website dan ingin menanyakan informasi seputar produk MU-LA Collagen." },
           { key: "whatsapp_reseller_message", label: "Template Pesan WhatsApp Khusus (Halaman Reseller)", type: "textarea", default: "Halo Admin MU-LA, saya sedang di halaman Reseller dan berminat untuk bergabung menjadi mitra/reseller MU-LA. Boleh minta info syarat & paketnya?" },
           { key: "home_label", label: "Label Menu 1 (Home)", type: "text", default: "Home" },

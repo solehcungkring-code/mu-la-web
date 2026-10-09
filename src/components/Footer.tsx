@@ -17,10 +17,12 @@ export default function Footer({ content }: { content?: Record<string, any> }) {
   const resellerUrl = content?.["mobile_nav_reseller_url"]?.textValue || "/reseller";
   const waLabel = content?.["mobile_nav_whatsapp_label"]?.textValue || "WhatsApp";
 
-  const rawWaNumber = content?.["mobile_nav_whatsapp_number"]?.textValue || content?.["info_phone"]?.textValue || "628110000000";
-  let cleanWaNumber = rawWaNumber.replace(/\D/g, "");
-  if (cleanWaNumber.startsWith("0")) {
-    cleanWaNumber = "62" + cleanWaNumber.slice(1);
+  const configuredWa = content?.["mobile_nav_whatsapp_number"]?.textValue || content?.["info_phone"]?.textValue;
+  let cleanWaNumber = "6289637514407";
+  if (configuredWa && !configuredWa.includes("811")) {
+    let sanitized = configuredWa.replace(/\D/g, "");
+    if (sanitized.startsWith("0")) sanitized = "62" + sanitized.slice(1);
+    if (sanitized) cleanWaNumber = sanitized;
   }
 
   // Context-Aware WhatsApp Message (Teks Informasi Relevan Sesuai Halaman Pengunjung)
@@ -75,7 +77,7 @@ export default function Footer({ content }: { content?: Record<string, any> }) {
               {/* SOCIAL MEDIA ICONS (Screenshot_2 style) */}
               <div className={styles.socialRow}>
                 <a
-                  href={content?.["social_whatsapp"]?.textValue || "https://wa.me/628110000000"}
+                  href={content?.["social_whatsapp"]?.textValue && !content?.["social_whatsapp"]?.textValue.includes("811") ? content?.["social_whatsapp"]?.textValue : `https://wa.me/${cleanWaNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.socialBtn}
